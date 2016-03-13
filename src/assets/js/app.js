@@ -12,10 +12,15 @@
           controller: 'HomeController',
           controllerAs: 'home'
         }).
-        when('/page1', {
-          templateUrl: 'assets/pages/page1.html',
-          controller: 'Page1Controller',
-          controllerAs: 'page1'
+        when('/cv', {
+          templateUrl: 'assets/pages/cv.html',
+          controller: 'CvController',
+          controllerAs: 'cv'
+        }).
+        when('/portfolio', {
+          templateUrl: 'assets/pages/portfolio.html',
+          controller: 'PortfolioController',
+          controllerAs: 'portfolio'
         }).
         when('/contact', {
           templateUrl: 'assets/pages/contact.html',
@@ -142,13 +147,13 @@
 
     }]);
 
-    app.controller('Page1Controller', [function() {
+    app.controller('PortfolioController', [function() {
       var vm = this;
 
       /* ------------------
       Init
       ------------------ */
-      console.log('Init page 1');
+      console.log('Init portfolio');
 
       vm.projects = [
         {
@@ -160,6 +165,18 @@
           description: 'test2'
         }
       ];
+
+      // ---------------
+
+    }]);
+
+    app.controller('CvController', [function() {
+      var vm = this;
+
+      /* ------------------
+      Init
+      ------------------ */
+      console.log('Init cv');
 
       // ---------------
 

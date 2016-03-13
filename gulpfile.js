@@ -23,7 +23,7 @@ gulp.task('serve', gulp.series(
 gulp.task('build', gulp.series(
 	cleanDistFolder,
 	compileSass,
-	gulp.parallel(compileCssAndJs, minimizeImages, moveFonts)
+	gulp.parallel(compileCssAndJs, minimizeImages, moveFonts, movePages)
 ));
 
 // gulp clean
@@ -95,6 +95,14 @@ function moveFonts() {
 		.pipe(gulp.dest('dist/assets/fonts'));
 }
 
+function movePages() {
+	return gulp.src('src/assets/pages/**/*')
+		.pipe(plugins.size({
+			title: 'Pages'
+		}))
+		.pipe(gulp.dest('dist/assets/pages'));
+}
+
 function watch() {
 	gulp.watch('src/assets/scss/*.{scss,sass}', compileSass);
 	gulp.watch('src/**/*.html', browserSync.reload);
@@ -109,21 +117,21 @@ function compileSass() {
 			// .pipe(plugins.sassLint.format())
 			//.pipe(plugins.sassLint.failOnError())
     	.pipe(plugins.sass())
-    	.pipe(gulp.dest('src/assets/css/build'))
+    	.pipe(gulp.dest('src/assets/css'))
 			.on('error', showError('Compile SASS'));
 }
 
 function compileCssAndJs() {
 	return gulp.src('src/*.html')
     	.pipe(plugins.useref())
-      // js actions
+      // // js actions
 			.pipe(plugins.if('*.js', plugins.stripComments()))
       .pipe(plugins.if('*.js', plugins.stripDebug()))
     	.pipe(plugins.if('*.js', plugins.uglify()))
 			.pipe(plugins.if('*.js', plugins.rev()))
-    	// css actions
+    	// // css actions
 			.pipe(plugins.if('*.css', plugins.uncss({
-	    	html: ['src/**/*.html']
+	    	html: ['src/index.html', 'src/assets/pages/*.html']
 	    })))
 			.pipe(plugins.if('*.css', plugins.autoprefixer({
 				browsers: ['last 2 versions'],
