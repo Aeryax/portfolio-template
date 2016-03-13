@@ -23,7 +23,11 @@ gulp.task('serve', gulp.series(
 gulp.task('build', gulp.series(
 	cleanDistFolder,
 	compileSass,
-	gulp.parallel(compileCssAndJs, minimizeImages, moveFonts, movePages)
+	gulp.parallel(compileCssAndJs, minimizeImages, moveFonts, movePages, moveJson)
+));
+
+gulp.task('test-prod', gulp.series(
+	testProd
 ));
 
 // gulp clean
@@ -57,6 +61,9 @@ gulp.task('doc-html', gulp.series(
 
 // gulp release
 gulp.task('release', gulp.series(
+	cleanDistFolder,
+	compileSass,
+	gulp.parallel(compileCssAndJs, minimizeImages, moveFonts, movePages, moveJson),
 	generateGithubPages
 ));
 
@@ -103,6 +110,14 @@ function movePages() {
 		.pipe(gulp.dest('dist/assets/pages'));
 }
 
+function moveJson() {
+	return gulp.src('src/*.json')
+		.pipe(plugins.size({
+			title: 'Json'
+		}))
+		.pipe(gulp.dest('dist/'));
+}
+
 function watch() {
 	gulp.watch('src/assets/scss/*.{scss,sass}', compileSass);
 	gulp.watch('src/**/*.html', browserSync.reload);
@@ -131,7 +146,8 @@ function compileCssAndJs() {
 			.pipe(plugins.if('*.js', plugins.rev()))
     	// // css actions
 			.pipe(plugins.if('*.css', plugins.uncss({
-	    	html: ['src/index.html', 'src/assets/pages/*.html']
+	    	html: ['src/index.html', 'src/assets/pages/*.html'],
+				uncssrc: '.uncssrc'
 	    })))
 			.pipe(plugins.if('*.css', plugins.autoprefixer({
 				browsers: ['last 2 versions'],
@@ -220,6 +236,16 @@ function runKarma(done) {
 
 function cleanProtractor() {
 	return del(['.protractor', 'phantomjsdriver.log']);
+}
+
+function testProd() {
+	return gulp.src('dist')
+	 .pipe(plugins.webserver({
+		 livereload: false,
+		 directoryListing: false,
+		 open: false,
+		 port: 3000
+	 }));
 }
 
 function runProtractor() {

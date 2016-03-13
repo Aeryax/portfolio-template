@@ -1,0 +1,5 @@
+{
+  "ignore": [
+    ".angular-google-map-container"
+  ]
+}
