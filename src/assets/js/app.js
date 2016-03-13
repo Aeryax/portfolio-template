@@ -1,70 +1,181 @@
-(function (angular) {
+(function(angular) {
 
+  console.log('init angular');
 
-    var app = angular.module('taskApp', []);
+  var app = angular.module('demoApp', ['ngRoute', 'ngResource', 'ngAnimate', 'uiGmapgoogle-maps']);
 
+  app.config(['$routeProvider',
+    function($routeProvider) {
+      $routeProvider.
+        when('/home', {
+          templateUrl: 'assets/pages/home.html',
+          controller: 'HomeController',
+          controllerAs: 'home'
+        }).
+        when('/page1', {
+          templateUrl: 'assets/pages/page1.html',
+          controller: 'Page1Controller',
+          controllerAs: 'page1'
+        }).
+        when('/contact', {
+          templateUrl: 'assets/pages/contact.html',
+          controller: 'ContactController',
+          controllerAs: 'contact'
+        }).
+        otherwise({
+          redirectTo: '/home'
+        });
+    }]);
 
-    app.controller('TaskController', function ($scope, StorageService) {
+    app.factory('ConfigService', ['$resource', function($resource) {
+      var observersCallback = [];
 
-        $scope.tasks = [];
+      var res = $resource('config.json', {}, {
+        query: {method: 'GET', isArray: false}
+      });
 
-        $scope.addTask = function (task) {
+      var notify = function() {
+        angular.forEach(observersCallback, function(cb) {
+          cb();
+        });
+      };
 
-            $scope.tasks.push(task);
-            $scope.$emit('task:added', 'task just added!');
+      res.query(function(data) {
+        obj.config = data;
+        notify();
+      });
 
-            backupTaskList();
-            refreshTasks();
-        };
+      var obj = {
+        registerCallback: function(cb) {
+          observersCallback.push(cb);
+        },
+        unregisterCallback: function(cb) {
+          observersCallback = observersCallback.filter(function(item) {
+            return item !== cb;
+          });
+        },
+        config: {}
+      };
 
-        $scope.removeTask = function (task) {
+      return obj;
+    }]);
 
-            var i = $scope.tasks.indexOf(task);
-            $scope.tasks.splice(i, 1);
-            $scope.$emit('task:removed');
+    app.controller('MainController', ['$scope', 'ConfigService', function($scope, ConfigService) {
 
-            backupTaskList();
-            refreshTasks();
-        };
+      var vm = this;
 
-        function refreshTasks() {
-            $scope.tasks = StorageService.getData('tasks');
+      vm.currentController = 'HomeController';
+
+      $scope.$on('$routeChangeSuccess', function(event, current) {
+        vm.currentController = current.$$route.controller;
+      });
+
+      // general infos
+      var configCallback = function() {
+        vm.config = ConfigService.config;
+      };
+
+      vm.config = ConfigService.config;
+
+      ConfigService.registerCallback(configCallback);
+
+      $scope.$destroy = function() {
+        ConfigService.unregisterCallback(configCallback);
+      };
+
+    }]);
+
+    app.controller('HomeController', ['$scope', 'ConfigService', function($scope, ConfigService) {
+      var vm = this;
+
+      /* ------------------
+      Init
+      ------------------ */
+      console.log('Init Home');
+
+      vm.config = ConfigService;
+
+      // general infos
+      var configCallback = function() {
+        configAction();
+      };
+
+      var configAction = function() {
+        vm.config = ConfigService.config;
+
+        jQuery(function($) {
+
+          var videoPlayerProperties = {
+            videoURL: vm.config.videoURL,
+            containment:'#bgndVideo',
+            autoPlay:true,
+            mute:true,
+            startAt:10,
+            opacity:1,
+            showControls: false,
+            loop: true,
+            gaTrack: false,
+            stopMovieOnBlur: true
+          };
+
+          $('.player').mb_YTPlayer(videoPlayerProperties);
+          console.log('starting player');
+        });
+      };
+
+      configAction();
+
+      ConfigService.registerCallback(configCallback);
+
+      $scope.$destroy = function() {
+        ConfigService.unregisterCallback(configCallback);
+      };
+
+      // TODO
+      // $scope.$destroy = function() {
+      //   // looks like a bad idea
+      //   $('#bgndVideo').remove();
+      //   console.log('destroying player');
+      // };
+
+      // ---------------
+
+    }]);
+
+    app.controller('Page1Controller', [function() {
+      var vm = this;
+
+      /* ------------------
+      Init
+      ------------------ */
+      console.log('Init page 1');
+
+      vm.projects = [
+        {
+          name: 'P1',
+          description: 'test'
+        },
+        {
+          name: 'P2',
+          description: 'test2'
         }
+      ];
 
-        function backupTaskList() {
-            StorageService.save('tasks', $scope.tasks);
-        }
-    });
+      // ---------------
 
-    app.service('StorageService', function ($http) {
+    }]);
 
-        this.save = function (key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-            $http.post('/tasks', {key: value});
-        };
+    app.controller('ContactController', [function() {
+      var vm = this;
 
-        this.getData = function (key) {
-            return JSON.parse(localStorage.getItem(key));
-        };
 
-        this.clear = function () {
-            localStorage.clear();
-        };
-    });
+      /* ------------------
+      Init
+      ------------------ */
+      console.log('Init contact');
+      vm.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+      // ---------------
 
-    app.directive('nkAlert', function () {
+    }]);
 
-        return {
-            template: "<span>{{alert.msg}}</span>",
-            replace: true,
-            link: function (scope, elem, attrs) {
-
-                scope.$on('task:added', function (data) {
-                    attrs.$addClass(data.name.split(':').join('-'));
-                    scope.alert = {msg: data.name};
-                })
-            }
-        }
-    });
-
-}(angular));
+})(angular);
