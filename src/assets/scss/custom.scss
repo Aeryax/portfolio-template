@@ -90,7 +90,10 @@ body {
 
   .navbar {
     opacity: 0.6;
+  }
 
+  .navbar:hover {
+    opacity: 0.9;
   }
 
   .navbar, .navbar.navbar-default {

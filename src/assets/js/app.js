@@ -98,6 +98,12 @@
       ------------------ */
       console.log('Init Home');
 
+      var pleaseWait = window.pleaseWait({
+        logo: 'assets/img/logo.png',
+        backgroundColor: '#FFF',
+        loadingHtml: '<p class=\'loading-message\'>Chargement en cours...</p>'
+      });
+
       vm.config = ConfigService;
 
       // general infos
@@ -120,7 +126,10 @@
             showControls: false,
             loop: true,
             gaTrack: false,
-            stopMovieOnBlur: true
+            stopMovieOnBlur: true,
+            onReady: function(player) {
+              pleaseWait.finish();
+            }
           };
 
           $('.player').mb_YTPlayer(videoPlayerProperties);
@@ -177,6 +186,10 @@
       Init
       ------------------ */
       console.log('Init cv');
+      setTimeout(function() {
+        $('.progress .progress-bar').progressbar();
+      }, 1500);
+
 
       // ---------------
 

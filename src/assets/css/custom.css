@@ -83,6 +83,8 @@ body {
     z-index: -1000; }
   body .navbar {
     opacity: 0.6; }
+  body .navbar:hover {
+    opacity: 0.9; }
   body .navbar, body .navbar.navbar-default {
     background-color: #FFF;
     color: #000; }

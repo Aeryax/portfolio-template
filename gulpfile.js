@@ -145,10 +145,10 @@ function compileCssAndJs() {
     	.pipe(plugins.if('*.js', plugins.uglify()))
 			.pipe(plugins.if('*.js', plugins.rev()))
     	// // css actions
-			.pipe(plugins.if('*.css', plugins.uncss({
-	    	html: ['src/index.html', 'src/assets/pages/*.html'],
-				uncssrc: '.uncssrc'
-	    })))
+			// .pipe(plugins.if('*.css', plugins.uncss({
+	    // 	html: ['src/index.html', 'src/assets/pages/*.html'],
+			// 	uncssrc: '.uncssrc'
+	    // })))
 			.pipe(plugins.if('*.css', plugins.autoprefixer({
 				browsers: ['last 2 versions'],
 				cascade: false
