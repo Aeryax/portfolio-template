@@ -164,14 +164,19 @@
       ------------------ */
       console.log('Init portfolio');
 
+      vm.index = 0;
+      vm.filter = '';
+
       vm.projects = [
         {
-          name: 'P1',
-          description: 'test'
+          name: 'Projet 1',
+          description: 'Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed blandit risus urna, vel mollis tellus tempor mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam quis turpis vel elit rhoncus vestibulum tincidunt id libero. ',
+          tags: ['opensource', 'graphisme']
         },
         {
-          name: 'P2',
-          description: 'test2'
+          name: 'Projet 2',
+          description: 'Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed blandit risus urna, vel mollis tellus tempor mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam quis turpis vel elit rhoncus vestibulum tincidunt id libero. ',
+          tags: ['graphisme', '3d']
         }
       ];
 

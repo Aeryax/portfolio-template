@@ -44,8 +44,8 @@
   src: url('../fonts/plane_crash.ttf');
 }
 
-.ng-enter { animation:slideInRight 0.5s both ease-in; }
-.ng-leave { animation:slideOutLeft 0.5s both ease-in; }
+.ng-enter { animation:scaleUp 0.5s both ease-in; }
+.ng-leave { animation:rotateFall 0.5s both ease-in; }
 
 $home-title-size: 450%;
 $home-title-color: white;
@@ -77,6 +77,25 @@ body {
 
     }
   }
+
+  hr {
+    padding-bottom: 30px;
+  }
+
+  .project-well {
+    h2 {
+      text-align: center;
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    hr {
+      padding-bottom: 0px;
+    }
+  }
+
 
   #bgndVideo {
     margin: 0;
