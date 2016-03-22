@@ -5,18 +5,19 @@
       <div class="row">
         <img src="assets/img/logo.png" class="col-md-2 img-responsive img-rounded" alt="{{main.config.author}}">
         <div class="col-md-10">
-          <span class="label label-success pull-right">Disponible</span>
+          <span class="label label-success pull-right" ng-show="main.config.available">Disponible</span>
+          <span class="label label-error pull-right" ng-show="!main.config.available">Indisponible</span>
           <h1>{{main.config.author}}</h1>
 
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas non leo eget quam semper pretium. Nulla facilisi. Ut rutrum lacus ac massa sagittis efficitur. Nullam nec magna commodo, laoreet purus vel, iaculis eros. Nam fermentum augue in luctus lacinia.</p>
+          <p>{{main.config.description}}</p>
 
           <p>
-            <a class="btn btn-primary btn-lg"><i class="socicon-twitter"></i></a>
-            <a class="btn btn-primary btn-lg"><i class="socicon-googleplus"></i></a>
-            <a class="btn btn-primary btn-lg"><i class="socicon-facebook"></i></a>
-            <a class="btn btn-primary btn-lg"><i class="socicon-linkedin"></i></a>
-            <a class="btn btn-primary btn-lg"><i class="socicon-github"></i></a>
-            <a class="btn btn-primary btn-lg pull-right">Télécharger (PDF)</a>
+            <a class="btn btn-primary btn-lg" href="{{main.config.socialNetworks.twitter}}" ng-show="main.config.socialNetworks.twitter"><i class="socicon-twitter"></i></a>
+            <a class="btn btn-primary btn-lg" href="{{main.config.socialNetworks.googleplus}}" ng-show="main.config.socialNetworks.googleplus"><i class="socicon-googleplus"></i></a>
+            <a class="btn btn-primary btn-lg" href="{{main.config.socialNetworks.facebook}}" ng-show="main.config.socialNetworks.facebook"><i class="socicon-facebook"></i></a>
+            <a class="btn btn-primary btn-lg" href="{{main.config.socialNetworks.linkedin}}" ng-show="main.config.socialNetworks.linkedin"><i class="socicon-linkedin"></i></a>
+            <a class="btn btn-primary btn-lg" href="{{main.config.socialNetworks.github}}" ng-show="main.config.socialNetworks.github"><i class="socicon-github"></i></a>
+            <a class="btn btn-primary btn-lg pull-right" href="{{main.config.cvURL}}">Télécharger (PDF)</a>
           </p>
         </div>
       </div>
@@ -29,10 +30,7 @@
       </div>
       <div class="panel-body">
         <ul>
-          <li><strong>2014-2016</strong> : Master Informatique (Université Aeryax-II)</li>
-          <li><strong>2013-2014</strong> : Licence 3 Informatique (Université Aeryax-II)</li>
-          <li><strong>2011-2013</strong> : DUT Informatique (Université Aeryax-II)</li>
-          <li><strong>2011</strong> : Baccaulauréat Scientifique (Lycée d'Aeryax)</li>
+          <li ng-repeat="study in cv.infos.studies | orderBy: beginDate"><strong>{{study.beginDate}}<span ng-show="study.endDate !== study.beginDate">-{{study.endDate}}</span></strong> : {{study.label}}</li>
         </ul>
       </div>
     </div>
@@ -43,8 +41,7 @@
       </div>
       <div class="panel-body">
         <ul>
-          <li><strong>2013-2016</strong> : Developpeur full-stack (Aeryax Corp., France)</li>
-          <li><strong>2012</strong> : Developpeur back-end (Aeryax Corp., France)</li>
+          <li ng-repeat="experience in cv.infos.experiences | orderBy: beginDate"><strong>{{experience.beginDate}}<span ng-show="experience.endDate !== experience.beginDate">-{{experience.endDate}}</span></strong> : {{experience.job}} ({{experience.enterprise}}, {{experience.country}})</li>
         </ul>
       </div>
     </div>
@@ -55,31 +52,10 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-6">
-            <strong>JavaScript</strong>
+          <div class="col-md-6" ng-repeat="skill in cv.infos.skills | orderBy: -level">
+            <strong>{{skill.label}}</strong>
             <div class="progress">
-              <div class="progress-bar progress-bar-info" data-transitiongoal="90"></div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <strong>PHP</strong>
-            <div class="progress">
-              <div class="progress-bar progress-bar-info" data-transitiongoal="80"></div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <strong>Photoshop</strong>
-            <div class="progress">
-              <div class="progress-bar progress-bar-info" data-transitiongoal="20"></div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <strong>HTML/CSS</strong>
-            <div class="progress">
-              <div class="progress-bar progress-bar-info" data-transitiongoal="90"></div>
+              <div class="progress-bar progress-bar-info" data-transitiongoal="{{skill.level}}"></div>
             </div>
           </div>
         </div>
