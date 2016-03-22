@@ -3,19 +3,19 @@
   <div class="row well portfolio">
 
     <div class="col-md-12 text-center">
-      <a class="btn btn-raised" ng-class="portfolio.filter === '' ? 'btn-primary' : btn-default" ng-click="portfolio.filter = ''">Tous</a>
-      <a class="btn btn-raised" ng-class="portfolio.filter === 'developpement' ? 'btn-primary' : btn-default" ng-click="portfolio.filter = 'developpement'">Développement</a>
-      <a class="btn btn-raised" ng-class="portfolio.filter === 'graphisme' ? 'btn-primary' : btn-default" ng-click="portfolio.filter = 'graphisme'">Graphisme</a>
-      <a class="btn btn-raised" ng-class="portfolio.filter === '3d' ? 'btn-primary' : btn-default" ng-click="portfolio.filter = '3d'">3D</a>
-      <a class="btn btn-raised" ng-class="portfolio.filter === 'opensource' ? 'btn-primary' : btn-default" ng-click="portfolio.filter = 'opensource'">OpenSource</a>
-      <a class="btn btn-raised" ng-class="portfolio.filter === 'photographie' ? 'btn-primary' : btn-default" ng-click="portfolio.filter = 'photographie'">Photographie</a>
+      <a class="btn btn-raised" ng-class="portfolio.filter === '' ? 'btn-primary' : btn-default" ng-click="portfolio.changeFilter('')">Tous</a>
+      <a class="btn btn-raised" ng-class="portfolio.filter === 'developpement' ? 'btn-primary' : btn-default" ng-click="portfolio.changeFilter('developpement')">Développement</a>
+      <a class="btn btn-raised" ng-class="portfolio.filter === 'graphisme' ? 'btn-primary' : btn-default" ng-click="portfolio.changeFilter('graphisme')">Graphisme</a>
+      <a class="btn btn-raised" ng-class="portfolio.filter === '3d' ? 'btn-primary' : btn-default" ng-click="portfolio.changeFilter('3d')">3D</a>
+      <a class="btn btn-raised" ng-class="portfolio.filter === 'opensource' ? 'btn-primary' : btn-default" ng-click="portfolio.changeFilter('opensource')">OpenSource</a>
+      <a class="btn btn-raised" ng-class="portfolio.filter === 'photographie' ? 'btn-primary' : btn-default" ng-click="portfolio.changeFilter('photographie')">Photographie</a>
 
       <hr>
     </div>
 
 
 
-    <div class="col-xs-6 col-md-3" ng-repeat="project in portfolio.projects | limitTo: 8 : portfolio.index * 8 | filter: { tags: portfolio.filter}">
+    <div class="col-xs-6 col-md-3" ng-repeat="project in portfolio.projects | filter: { tags: portfolio.filter} | limitTo: 8 : portfolio.index * 8 | filter: query as filtered">
       <div class="well project-well">
         <h2>{{project.name}}</h2>
         <p>
@@ -32,8 +32,8 @@
     </div>
 
     <ul class="pager col-md-12">
-      <li class="previous disabled"><a ng-click="portfolio.older()">← Older</a></li>
-      <li class="next disabled"><a class="withripple" ng-click="portfolio.newer()">Newer →</a></li>
+      <li class="previous disabled" ng-class="portfolio.index === 0 ? 'disabled' : ''"><a ng-click="portfolio.older()">← Older</a></li>
+      <li class="next disabled" ng-class="filtered.length < 8 ? 'disabled' : ''"><a class="withripple" ng-click="portfolio.newer(filtered.length)">Newer →</a></li>
     </ul>
 
   </div>

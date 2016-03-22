@@ -185,6 +185,24 @@
         vm.projects = data;
       });
 
+      vm.changeFilter = function(filter) {
+        vm.filter = filter;
+        vm.index = 0;
+      };
+
+      vm.newer = function(filteredLength) {
+        if(filteredLength >= 8) {
+          vm.index++;
+        }
+
+      };
+
+      vm.older = function() {
+        if(vm.index > 0) {
+          vm.index--;
+        }
+      };
+
       // ---------------
 
     }]);
