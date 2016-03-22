@@ -1,0 +1,58 @@
+{
+    "studies": [
+        {
+            "beginDate": 2014,
+            "endDate": 2016,
+            "label": "Master Informatique (Université Aeryax-II)"
+        },
+        {
+            "beginDate": 2013,
+            "endDate": 2014,
+            "label": "Licence 3 Informatique (Université Aeryax-II)"
+        },
+        {
+            "beginDate": 2011,
+            "endDate": 2013,
+            "label": "DUT Informatique (Université Aeryax-II)"
+        },
+        {
+            "beginDate": 2011,
+            "endDate": 2011,
+            "label": "Baccaulauréat Scientifique (Lycée d'Aeryax)"
+        }
+    ],
+    "experiences": [
+        {
+            "beginDate": 2013,
+            "endDate": 2016,
+            "job": "Developpeur full-stack",
+            "enterprise": "Aeryax Corp.",
+            "country": "France"
+        },
+        {
+            "beginDate": 2012,
+            "endDate": 2012,
+            "job": "Developpeur back-end",
+            "enterprise": "Aeryax Corp.",
+            "country": "France"
+        }
+    ],
+    "skills": [
+        {
+            "label": "JavaScript",
+            "level": 90
+        },
+        {
+            "label": "PHP",
+            "level": 70
+        },
+        {
+            "label": "Photoshop",
+            "level": 10
+        },
+        {
+            "label": "HTML/CSS",
+            "level": 90
+        }
+    ]
+}

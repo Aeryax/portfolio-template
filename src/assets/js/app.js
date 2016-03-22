@@ -65,6 +65,18 @@
       return obj;
     }]);
 
+    app.factory('PortfolioService', ['$resource', function($resource) {
+      return $resource('portfolio.json', {}, {
+        list: {method: 'GET', isArray: true}
+      });
+    }]);
+
+    app.factory('CVService', ['$resource', function($resource) {
+      return $resource('cv.json', {}, {
+        list: {method: 'GET', isArray: false}
+      });
+    }]);
+
     app.controller('MainController', ['$scope', 'ConfigService', function($scope, ConfigService) {
 
       var vm = this;
@@ -156,7 +168,7 @@
 
     }]);
 
-    app.controller('PortfolioController', [function() {
+    app.controller('PortfolioController', ['PortfolioService', function(PortfolioService) {
       var vm = this;
 
       /* ------------------
@@ -167,40 +179,41 @@
       vm.index = 0;
       vm.filter = '';
 
-      vm.projects = [
-        {
-          name: 'Projet 1',
-          description: 'Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed blandit risus urna, vel mollis tellus tempor mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam quis turpis vel elit rhoncus vestibulum tincidunt id libero. ',
-          tags: ['opensource', 'graphisme']
-        },
-        {
-          name: 'Projet 2',
-          description: 'Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed blandit risus urna, vel mollis tellus tempor mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam quis turpis vel elit rhoncus vestibulum tincidunt id libero. ',
-          tags: ['graphisme', '3d']
-        }
-      ];
+      vm.projects = [];
+
+      PortfolioService.list(function(data) {
+        vm.projects = data;
+      });
 
       // ---------------
 
     }]);
 
-    app.controller('CvController', [function() {
+    app.controller('CvController', ['CVService', function(CVService) {
       var vm = this;
 
       /* ------------------
       Init
       ------------------ */
       console.log('Init cv');
-      setTimeout(function() {
-        $('.progress .progress-bar').progressbar();
-      }, 1500);
+
+      vm.infos = {};
+
+      CVService.list(function(data) {
+        vm.infos = data;
+        setTimeout(function() {
+          $('.progress .progress-bar').progressbar();
+        }, 1500);
+      });
+
+
 
 
       // ---------------
 
     }]);
 
-    app.controller('ContactController', [function() {
+    app.controller('ContactController', ['ConfigService', function(ConfigService) {
       var vm = this;
 
 
@@ -208,7 +221,7 @@
       Init
       ------------------ */
       console.log('Init contact');
-      vm.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+      vm.map = { center: { latitude: ConfigService.config.latitude, longitude: ConfigService.config.longitude }, zoom: ConfigService.config.zoom };
       // ---------------
 
     }]);

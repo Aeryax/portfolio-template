@@ -1,5 +1,17 @@
 {
   "author": "Aeryax Demo",
   "description": "Description here",
-  "videoURL": "http://youtu.be/8FzH41aEhVc"
+  "videoURL": "http://youtu.be/8FzH41aEhVc",
+  "socialNetworks": {
+    "twitter": "https://twitter.com/",
+    "googleplus": "https://www.google.com/",
+    "facebook": "https://www.facebook.com/",
+    "linkedin": "https://www.linkedin.com/",
+    "github": "https://www.github.com/"
+  },
+  "cvURL": "assets/pdf/cv.pdf",
+  "available": true,
+  "longitude": 1.434899,
+  "latitude": 43.584019,
+  "zoom": 10
 }

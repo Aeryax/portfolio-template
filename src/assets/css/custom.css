@@ -33,6 +33,11 @@
     opacity: 0.3;
     -webkit-transform: scale(0.8); } }
 
+@keyframes scaleDown {
+  to {
+    opacity: 0.3;
+    -webkit-transform: scale(0.8); } }
+
 /* slide in from the right */
 @keyframes slideInRight {
   from {
@@ -51,10 +56,13 @@
   font-family: "Plane Crash";
   src: url("../fonts/plane_crash.ttf"); }
 
-.ng-enter {
+.view .ng-enter {
+  animation: slideInUp 0.5s both ease-in; }
+
+.view .portfolio .ng-enter {
   animation: scaleUp 0.5s both ease-in; }
 
-.ng-leave {
+.view .portfolio .ng-leave {
   animation: rotateFall 0.5s both ease-in; }
 
 body {
