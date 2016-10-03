@@ -17,9 +17,10 @@
 
     <div class="col-xs-6 col-md-3" ng-repeat="project in portfolio.projects | filter: { tags: portfolio.filter} | limitTo: 8 : portfolio.index * 8 | filter: query as filtered">
       <div class="well project-well">
-        <h2>{{project.name}}</h2>
+
+        <h2><a href="#/project/{{project.id}}">{{project.name}}</a></h2>
         <p>
-          <a class="thumbnail">
+          <a class="thumbnail" href="#/project/{{project.id}}">
             <img src="assets/img/project.jpg" alt="img-responsive" alt="{{project.name}}">
           </a>
           {{project.description}}

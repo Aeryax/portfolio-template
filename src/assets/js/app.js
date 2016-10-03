@@ -2,7 +2,7 @@
 
   console.log('init angular');
 
-  var app = angular.module('demoApp', ['ngRoute', 'ngResource', 'ngAnimate', 'uiGmapgoogle-maps']);
+  var app = angular.module('demoApp', ['ngRoute', 'ngResource', 'ngAnimate', 'uiGmapgoogle-maps', 'ngSanitize']);
 
   app.config(['$routeProvider',
     function($routeProvider) {
@@ -26,6 +26,11 @@
           templateUrl: 'assets/pages/contact.html',
           controller: 'ContactController',
           controllerAs: 'contact'
+        }).
+        when('/project/:id', {
+          templateUrl: 'assets/pages/project.html',
+          controller: 'ProjectController',
+          controllerAs: 'project'
         }).
         otherwise({
           redirectTo: '/home'
@@ -231,9 +236,31 @@
 
     }]);
 
-    app.controller('ContactController', ['ConfigService', function(ConfigService) {
+    app.controller('ProjectController', ['PortfolioService', '$routeParams', '$location', function(PortfolioService, $routeParams, $location) {
       var vm = this;
 
+      vm.name = '';
+      vm.content = '';
+
+      PortfolioService.list(function(data) {
+        var projects = data.filter(function(item) {
+          return item.id == $routeParams.id;
+        });
+
+        if(projects.length > 0) {
+          vm.name = projects[0].name;
+          vm.content = projects[0].content;
+        }
+        else {
+          $location.path('/portfolio');
+        }
+      });
+
+
+    }]);
+
+    app.controller('ContactController', ['ConfigService', function(ConfigService) {
+      var vm = this;
 
       /* ------------------
       Init

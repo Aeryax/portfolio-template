@@ -71,7 +71,7 @@ gulp.task('release', gulp.series(
 gulp.task('build-zip', gulp.series(
   gulp.parallel(cleanDistFolder, cleanZip),
 	compileSass,
-	gulp.parallel(compileCssAndJs, minimizeImages, moveFonts),
+	gulp.parallel(compileCssAndJs, minimizeImages, moveFonts, movePages, moveJson),
 	zip
 ));
 

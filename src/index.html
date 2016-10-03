@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             <li ng-class="main.currentController === 'HomeController' ? 'active' : ''"><a href="#/home">Home</a></li>
             <li ng-class="main.currentController === 'CvController' ? 'active' : ''"><a href="#/cv">Curriculum Vitae</a></li>
-            <li ng-class="main.currentController === 'PortfolioController' ? 'active' : ''"><a href="#/portfolio">Portfolio</a></li>
+            <li ng-class="main.currentController === 'PortfolioController' || main.currentController === 'ProjectController' ? 'active' : ''"><a href="#/portfolio">Portfolio</a></li>
             <li ng-class="main.currentController === 'ContactController' ? 'active' : ''"><a href="#/contact">Contact</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -62,6 +62,7 @@
     <script src="assets/components/angular-route/angular-route.js"></script>
     <script src="assets/components/angular-resource/angular-resource.js"></script>
     <script src="assets/components/angular-animate/angular-animate.js"></script>
+    <script src="assets/components/angular-sanitize/angular-sanitize.js"></script>
     <script>window.jQuery || document.write('<script src="assets/components/jquery/dist/jquery.js"><\/script>')</script>
     <script src="assets/components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="assets/components/bootstrap-material-design/dist/js/ripples.js"></script>
